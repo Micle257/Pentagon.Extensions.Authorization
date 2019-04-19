@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Michal Pokorný</Authors>
+    <Company></Company>
+    <Product>Pentagon.Extensions.Authorization</Product>
+    <Description>Class library providing general extensions and utility types for authorization tasks.</Description>
+    <Copyright>Copyright (c) Michal Pokorný. All Rights Reserved.</Copyright>
+    <Version>1.5.0</Version>
+    <PackageProjectUrl>https://github.com/Micle257/Pentagon.Extensions.Authorization</PackageProjectUrl>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\build\$(AssemblyName)\</OutputPath>
+    <DocumentationFile>..\..\build\$(AssemblyName)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\debug\$(AssemblyName)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.1" PrivateAssets="All" />
+  </ItemGroup>
+  
+</Project>
