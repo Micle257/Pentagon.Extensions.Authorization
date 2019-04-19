@@ -7,7 +7,7 @@
     <Product>Pentagon.Extensions.Authorization</Product>
     <Description>Class library providing general extensions and utility types for authorization tasks.</Description>
     <Copyright>Copyright (c) Michal Pokorný. All Rights Reserved.</Copyright>
-    <Version>1.0.0</Version>
+    <Version>1.5.0</Version>
     <PackageProjectUrl>https://github.com/Micle257/Pentagon.Extensions.Authorization</PackageProjectUrl>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
