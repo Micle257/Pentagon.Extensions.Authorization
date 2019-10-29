@@ -6,37 +6,51 @@
 
 namespace Pentagon.Extensions.Authorization
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
+    using JetBrains.Annotations;
 
-    public class ClaimRowExpand
+    /// <summary> Represents a claim values grouped per type. </summary>
+    public readonly struct ClaimRowExpand
     {
-        public string Type { get; set; }
-
-        public List<string[]> Values { get; set; }
-
-        public static IEnumerable<ClaimRowExpand> Parse(IEnumerable<Claim> claims)
+        public ClaimRowExpand([NotNull] string type, [NotNull] IEnumerable<string[]> values)
         {
+            if (values == null)
+                throw new ArgumentNullException(nameof(values));
+
+            Type = type ?? throw new ArgumentNullException(nameof(type));
+
+            Values = values.ToList().AsReadOnly();
+        }
+
+        [NotNull]
+        public string Type { get; }
+
+        [NotNull]
+        public IReadOnlyCollection<string[]> Values { get; }
+
+        [NotNull]
+        public static IEnumerable<ClaimRowExpand> Parse([NotNull] IEnumerable<Claim> claims)
+        {
+            if (claims == null)
+                throw new ArgumentNullException(nameof(claims));
+
             // converts flat-array-representation to collection
             // values are normalized and unique
             var categorization = claims.GroupBy(a => a.Type);
 
             foreach (var category in categorization)
             {
-                var row = new ClaimRowExpand
-                          {
-                                  Type = category.Key
-                          };
-
                 // get values normalized
-                var normalized = category.Select(b => b.Value)
+                var normalized = category.Where(a => a != null)
+                                         .Select(b => b.Value)
+                                         .Where(a => a != null)
                                          .Select(b => b.Trim().ToLowerInvariant())
                                          .Distinct();
 
-                row.Values = normalized.Select(value => value.Split('.')).ToList();
-
-                yield return row;
+                yield return new ClaimRowExpand(category.Key ?? string.Empty, normalized.Select(value => value.Split('.')));
             }
         }
     }
