@@ -6,6 +6,9 @@
 
 namespace Pentagon.Extensions.Authorization
 {
+    using JetBrains.Annotations;
+
+    [PublicAPI]
     public interface IClaimValueType
     {
         string Type { get; }
